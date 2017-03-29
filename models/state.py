@@ -19,11 +19,12 @@ class State(BaseModel, Base):
                               cascade="all, delete, delete-orphan")
     else:
         name = ""
+        cities = ""
 
         @property
         def cities(self):
             cities = models.storage.all("City").values()
-            result = [city for city in cities if city.state_id == self.id]
+            result = [city_list for city in cities if city.state_id == self.id]
             return (result)
 
     def __init__(self, *args, **kwargs):
