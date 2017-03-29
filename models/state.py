@@ -12,13 +12,14 @@ from os import getenv
 
 class State(BaseModel, Base):
     '''This is the 'State' class'''
-    if getenv("HBNB_TYPE_STORAGE", "fs") == db:
+    if getenv("HBNB_TYPE_STORAGE", "fs") == "db":
         __tablename__ = "states"
         name = Column(String(128), nullable=False)
         cities = relationship("City", backref="state",
                               cascade="all, delete, delete-orphan")
     else:
         name = ""
+
         @property
         def cities(self):
             cities = models.storage.all("City").values()
