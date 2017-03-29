@@ -12,12 +12,12 @@
     {% else %}
       <H1>Not Found!</H1>
     {% endif %}
-    {% if state or states_l %}
+    {% if state or states_l -%}
       <UL>
-          {% set vals = states_l.values() if states_l else state.cities %}
+          {%- set vals = states_l.values() if states_l else state.cities -%}
 	  {% for item in vals|sort(attribute='name') %}
 	    <LI>{{ item.id }}: <B>{{ item.name }}</B></LI>
-	  {% endfor %}
+	  {%- endfor %}
       </UL>
     {% endif %}
   </BODY>
