@@ -6,6 +6,7 @@ This module starts a web aplication via Flask
 from flask import Flask
 app = Flask(__name__)
 
+
 @app.route("/")
 def hello_world():
         return ("Hello HBNB!")
