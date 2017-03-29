@@ -7,6 +7,7 @@ from models.base_model import BaseModel, Base
 from models.city import City
 from sqlalchemy import *
 from sqlalchemy.orm import relationship
+from os import getenv
 
 
 class State(BaseModel, Base):
