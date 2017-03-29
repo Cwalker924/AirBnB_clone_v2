@@ -2,9 +2,7 @@
 '''
 This is the 'db_storage' module
 '''
-import sys
-import os
-from models.base_model import BaseModel, Base
+from models.base_model import Base
 from models.user import User
 from models.amenity import Amenity
 from models.city import City
@@ -16,40 +14,39 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm.scoping import scoped_session
 from models.base_model import Base
 from sqlalchemy import inspect
-
+from os import getenv
 
 class DBStorage():
     """This is the 'DBStorage class"""
     __engine = None
     __session = None
-    valid_models = ["User", "State", "City", "Amenity", "Place", "Review"]
+    __Session = None
 
     def __init__(self):
         '''This is the initialization method'''
-        uname = os.environ["HBNB_MYSQL_USER"]
-        upass = os.environ["HBNB_MYSQL_PWD"]
-        host = os.environ["HBNB_MYSQL_HOST"]
-        dbname = os.environ["HBNB_MYSQL_DB"]
-        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}"
-                                      .format(uname, upass, host, dbname))
-        self.__Session = sessionmaker()
-        self.__Session.configure(bind=self.__engine)
-        Base.metadata.create_all(self.__engine)
-        self.__session = self.__Session()
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
+            getenv('HBNB_MYSQL_USER'),
+            getenv('HBNB_MYSQL_PWD'),
+            getenv('HBNB_MYSQL_HOST'),
+            getenv('HBNB_MYSQL_DB')))
+        self.__models_available = {"User": User, "Amenity": Amenity,
+                                   "City": City, "Place": Place,
+                                   "Review": Review, "State": State}
+        if getenv('HBNB_MYSQL_ENV', 'not') == 'test':
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        '''This is the 'all' method'''
-        query = {}
-        if cls is not None:
-            for instance in self.__session.query(cls):
-                query.update(instance.id, instance)
-            return (query)
+        objects = {}
+        if cls:
+            for key in self.__session.query(self.__models_available[cls]):
+                objects[key.__dict__['id']] = key
         else:
-            for cls in DBStorage.valid_models:
-                cls = getattr(sys.modules["models"], cls)
-                for instance in self.__session.query(cls):
-                    query.update({instance.id: instance})
-            return (query)
+            for value in self.__models_available.values():
+                i = self.__session.query(value).all()
+                if i:
+                    for key in i:
+                        objects[key.__dict__['id']] = key
+        return(objects)
 
     def new(self, obj):
         '''This is the 'new' method'''
