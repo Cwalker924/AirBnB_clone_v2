@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<HTML land="en">
+<HTML lang="en">
   <HEAD>
     <TITLE>HBNB</TITLE>
   </HEAD>
@@ -11,13 +11,13 @@
     <H1>States</H1>
     {% else %}
     <H1>Not Found!</H1>
-      {% endif %}
+    {% endif %}
     {% if state or states_l %}
     <UL>
-      {% set vals = states_l.values() if states_l else state.cities %}
-      {% for item in vals|sort(attribute='name') %}
-      <LI>{{ item.id }}: <B>{{ item.name }}</B></LI>
-      {% endfor %}
+        {% set vals = states_l.values() if states_l else state.cities %}
+	{% for item in vals|sort(attribute='name') %}
+	<LI>{{ item.id }}: <B>{{ item.name }}</B></LI>
+	{% endfor %}
     </UL>
     {% endif %}
   </BODY>

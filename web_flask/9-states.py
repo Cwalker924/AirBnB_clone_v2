@@ -19,8 +19,8 @@ def states_id(id):
 
     for id_state in states:
         if id_state == id:
-           get_state = states[id_state]
-           get_state = str(get_state)
+            get_state = states[id_state]
+            get_state = str(get_state)
     return (render_template("9-states.html", state=get_state))
 
 
