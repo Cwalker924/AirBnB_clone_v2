@@ -17,11 +17,11 @@
 	  <h3>States</h3>
 	  <h4>&nbsp;</h4>
 	  <ul class="popover">
-	    {% for state in states_l|sort(attribute='name') %}
-	    <li> <h2>{{ state.name }}</h2>
+	    {% for sing_state in states_l|sort(attribute='name') %}
+	    <li> <h2>{{ sing_state.name }}</h2>
 	      <ul>
-		{% for city in state.cities|sort(attribute='name') %}
-		<li> {{ city.name }} </li>
+		{% for sing_city in state.cities|sort(attribute='name') %}
+		<li> {{ sing_city.name }} </li>
 		{% endfor %}
 	      </ul>
 	    </li>
