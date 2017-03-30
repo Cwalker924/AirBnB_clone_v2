@@ -14,8 +14,8 @@
     {% endif %}
     {% if state or states_l -%}
       <UL>
-          {%- set vals = states_l.values() if states_l else state.cities -%}
-	  {% for item in vals|sort(attribute='name') %}
+          {%- set val = states_l.values() if states_l else state.cities -%}
+	  {% for item in val|sort(attribute='name') %}
 	    <LI>{{ item.id }}: <B>{{ item.name }}</B></LI>
 	  {%- endfor %}
       </UL>
