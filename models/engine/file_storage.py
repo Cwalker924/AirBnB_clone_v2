@@ -13,6 +13,7 @@ from models.user import User
 from models.amenity import Amenity
 import os
 
+
 class FileStorage:
     '''This is the 'FileStorage' class'''
     __file_path = "file.json"
